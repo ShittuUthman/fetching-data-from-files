@@ -1,4 +1,4 @@
-class Open_File:
+class OpenFile:
     def __init__(self, file_name, mode):
         self.file_name = file_name
         self.mode = mode
@@ -11,13 +11,26 @@ class Open_File:
         self.file.close()
 
 
-with Open_File('topCPU.txt.py', 'r') as f:
+with OpenFile('topCPU.txt.py', 'r') as f:
     a = f.readlines()
+    percent_arr = []
+    datetime_arr = []
+
     for lines in a:
-        if len(lines) > 2 and len(lines) < 20:
-            print('the percentage is ' + lines)
+        if lines.startswith('%Cpu(s)'):
+            b = lines.split(' ')
+            # print(b[2])
+            try:
+                percent = float(b[2]) * 100
+                percent_arr.append(round(percent))
+            except ValueError:
+                pass
+
         elif len(lines) > 20:
-            print('the date is ' + lines)
+            c = lines
+            print('the date is ' + c)
+            datetime_arr.append(c.strip())
+    print(list(zip(percent_arr, datetime_arr)))
 
 
 
